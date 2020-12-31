@@ -1,48 +1,51 @@
-﻿@model TekDesk.Models.Query
+﻿
+@model TekDesk.Models.Query;
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Manage Query";
 }
 
-<h1>Details</h1>
 
-<div>
+<div class="p-4 border">
     <h4>Query</h4>
     <hr />
+    <h5>Details</h5>
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee.FullName)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Employee.FullName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.QState)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.QState)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Added)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Added)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Tag)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tag)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Employee)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Employee.FName)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QState)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QState)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Added)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Added)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.QueryID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.QueryID" class="btn btn-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.QueryID" class="btn btn-danger">Delete</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <a asp-action="Index" asp-controller="Solutions" asp-route-queryID="@Model.QueryID" class="btn btn-info">View Solutions</a>
+    </div>
 </div>

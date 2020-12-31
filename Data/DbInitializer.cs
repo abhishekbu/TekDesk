@@ -65,9 +65,9 @@ namespace TekDesk.Data
 
             var subjects = new Subject[]
             {
-                new Subject{ID=1, Name=Expertise.Network},
-                new Subject{ID=2, Name=Expertise.Software},
-                new Subject{ID=3, Name=Expertise.Hardware}
+                new Subject{ID=2, Name=Expertise.Network},
+                new Subject{ID=1, Name=Expertise.Software},
+                new Subject{ID=0, Name=Expertise.Hardware}
             };
 
             foreach (Subject s in subjects)
@@ -93,16 +93,16 @@ namespace TekDesk.Data
 
             var employeeSubjects = new EmployeeSubject[]
             {
-                new EmployeeSubject{EmployeeID=1000, SubjectID=1},
-                new EmployeeSubject{EmployeeID=1001, SubjectID=1},
-                new EmployeeSubject{EmployeeID=1002, SubjectID=2},
-                new EmployeeSubject{EmployeeID=1003, SubjectID=2},
-                new EmployeeSubject{EmployeeID=1004, SubjectID=3},
-                new EmployeeSubject{EmployeeID=1005, SubjectID=3},
-                new EmployeeSubject{EmployeeID=1006, SubjectID=1},
-                new EmployeeSubject{EmployeeID=1007, SubjectID=1},
-                new EmployeeSubject{EmployeeID=1008, SubjectID=2},
-                new EmployeeSubject{EmployeeID=1009, SubjectID=3},
+                new EmployeeSubject{EmployeeID=1000, SubjectID=0},
+                new EmployeeSubject{EmployeeID=1001, SubjectID=0},
+                new EmployeeSubject{EmployeeID=1002, SubjectID=1},
+                new EmployeeSubject{EmployeeID=1003, SubjectID=1},
+                new EmployeeSubject{EmployeeID=1004, SubjectID=2},
+                new EmployeeSubject{EmployeeID=1005, SubjectID=2},
+                new EmployeeSubject{EmployeeID=1006, SubjectID=0},
+                new EmployeeSubject{EmployeeID=1007, SubjectID=0},
+                new EmployeeSubject{EmployeeID=1008, SubjectID=1},
+                new EmployeeSubject{EmployeeID=1009, SubjectID=2},
             };
 
             foreach (EmployeeSubject es in employeeSubjects)
@@ -115,29 +115,23 @@ namespace TekDesk.Data
             {
                 new EmployeeNotification
                 {
-                    EmployeeID=1000, 
+                    EmployeeID=1004, 
                     Notification="Network Device not connecting", 
                     QueryID=1
                 },
                 new EmployeeNotification
                 {
-                    EmployeeID=1001, 
+                    EmployeeID=1005, 
                     Notification="Network Device not connecting", 
                     QueryID=1
                 },
                 new EmployeeNotification
                 {
-                    EmployeeID=1006, 
+                    EmployeeID=1009, 
                     Notification="Network Device not connecting", 
                     QueryID=1
                 },
-                new EmployeeNotification
-                {
-                    EmployeeID=1007, 
-                    Notification="Network Device not connecting", 
-                    QueryID=1
-                },
-
+               
                 new EmployeeNotification
                 {
                     EmployeeID=1002, 
@@ -177,61 +171,44 @@ namespace TekDesk.Data
                 },
                 new EmployeeNotification
                 {
-                    EmployeeID=1000, 
+                    EmployeeID=1004, 
                     Notification="Server crashed", 
                     QueryID=4
+                },
+                new EmployeeNotification
+                {
+                    EmployeeID=1005, 
+                    Notification="Server crashed", 
+                    QueryID=4
+                },
+                new EmployeeNotification
+                {
+                    EmployeeID=1009, 
+                    Notification="Server crashed", 
+                    QueryID=4
+                },
+                  
+                new EmployeeNotification
+                {
+                    EmployeeID=1000, 
+                    Notification="Keyborad not functioning correctly", 
+                    QueryID=5
                 },
                 new EmployeeNotification
                 {
                     EmployeeID=1001, 
-                    Notification="Server crashed", 
-                    QueryID=4
+                    Notification="Keyborad not functioning correctly", 
+                    QueryID=5
                 },
                 new EmployeeNotification
                 {
                     EmployeeID=1006, 
-                    Notification="Server crashed", 
-                    QueryID=4
+                    Notification="Keyborad not functioning correctly", 
+                    QueryID=5
                 },
                 new EmployeeNotification
                 {
                     EmployeeID=1007, 
-                    Notification="Server crashed", 
-                    QueryID=4
-                },
-                new EmployeeNotification
-                {
-                    EmployeeID=1004, 
-                    Notification="Server crashed", 
-                    QueryID=4
-                },
-                new EmployeeNotification
-                {
-                    EmployeeID=1005, 
-                    Notification="Server crashed", 
-                    QueryID=4
-                },
-                new EmployeeNotification
-                {
-                    EmployeeID=1009, 
-                    Notification="Server crashed", 
-                    QueryID=4
-                },
-                new EmployeeNotification
-                {
-                    EmployeeID=1004, 
-                    Notification="Keyborad not functioning correctly", 
-                    QueryID=5
-                },
-                new EmployeeNotification
-                {
-                    EmployeeID=1005, 
-                    Notification="Keyborad not functioning correctly", 
-                    QueryID=5
-                },
-                new EmployeeNotification
-                {
-                    EmployeeID=1009, 
                     Notification="Keyborad not functioning correctly", 
                     QueryID=5
                 },

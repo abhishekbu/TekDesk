@@ -23,9 +23,8 @@ namespace TekDesk.Controllers
         // GET: Queries
         public async Task<IActionResult> Index()
         {
-            var queries = _context.Queries.Include(q => q.Employee);
-           
-            return View(await queries.ToListAsync());
+            var tekDeskContext = _context.Queries.Include(q => q.Employee);
+            return View(await tekDeskContext.ToListAsync());
         }
 
         public async Task<IActionResult> MyQueries()
@@ -50,6 +49,7 @@ namespace TekDesk.Controllers
             var query = await _context.Queries
                 .Include(q => q.Employee)
                 .FirstOrDefaultAsync(m => m.QueryID == id);
+
             if (query == null)
             {
                 return NotFound();
@@ -61,14 +61,8 @@ namespace TekDesk.Controllers
         // GET: Queries/Create
         public IActionResult Create()
         {
-            var employeeId = HttpContext.Session.GetString("EmployeeId");
-            if (employeeId != null)
-            {
-                ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName");
-                return View();
-            }
-            return RedirectToAction("Index", "Home");
-
+            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName");
+            return View();
         }
 
         // POST: Queries/Create
@@ -76,13 +70,15 @@ namespace TekDesk.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,QState,Added,Tag")] Query query)
+        public async Task<IActionResult> Create([Bind("QueryID,Description,QState,Added,EmployeeID,Tag")] Query query)
         {
             if (ModelState.IsValid)
             {
+                var employeeId = int.Parse(HttpContext.Session.GetString("EmployeeId"));
                 query.Added = DateTime.Now;
-                query.EmployeeID = int.Parse(HttpContext.Session.GetString("EmployeeId"));
+                query.EmployeeID = employeeId;
                 query.QState = States.pending;
+
                 _context.Add(query);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MyQueries));
@@ -94,18 +90,33 @@ namespace TekDesk.Controllers
         // GET: Queries/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var employeeId = HttpContext.Session.GetString("EmployeeId");
+                
+                var query = await _context.Queries.FindAsync(id);
 
-            var query = await _context.Queries.FindAsync(id);
-            if (query == null)
-            {
-                return NotFound();
+                if (query == null)
+                {
+                    return NotFound();
+                }
+
+                if (query.EmployeeID != int.Parse(employeeId) || employeeId == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                
+                ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", query.EmployeeID);
+                return View(query);
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", query.EmployeeID);
-            return View(query);
+            catch
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: Queries/Edit/5
@@ -113,8 +124,11 @@ namespace TekDesk.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("QueryID,Description,QState,Added,EmployeeID,Tag")] Query query)
+        public async Task<IActionResult> Edit(int id, [Bind("Description,QState,EmployeeID,Tag")] Query query)
         {
+            query.EmployeeID = int.Parse(HttpContext.Session.GetString("EmployeeId"));
+            query.QueryID = id;
+
             if (id != query.QueryID)
             {
                 return NotFound();
@@ -147,20 +161,35 @@ namespace TekDesk.Controllers
         // GET: Queries/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var query = await _context.Queries
-                .Include(q => q.Employee)
-                .FirstOrDefaultAsync(m => m.QueryID == id);
-            if (query == null)
+                var employeeID = HttpContext.Session.GetString("EmployeeId");
+
+
+                var query = await _context.Queries
+                    .Include(q => q.Employee)
+                    .FirstOrDefaultAsync(m => m.QueryID == id);
+                if (query == null)
+                {
+                    return NotFound();
+                }
+
+                if (employeeID == null || int.Parse(employeeID) != query.EmployeeID)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(query);
+            }
+            catch
             {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
-
-            return View(query);
         }
 
         // POST: Queries/Delete/5
@@ -169,6 +198,13 @@ namespace TekDesk.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var query = await _context.Queries.FindAsync(id);
+            var solutions = _context.Solutions.Include(s => s.Artifact).Where(s => s.QueryID == id).ToList();
+
+            foreach (var s in solutions)
+            {
+                _context.Solutions.Remove(s);
+            }
+
             _context.Queries.Remove(query);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

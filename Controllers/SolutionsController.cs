@@ -20,10 +20,15 @@ namespace TekDesk.Controllers
         }
 
         // GET: Solutions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? queryID)
         {
-            var tekDeskContext = _context.Solutions.Include(s => s.Employee).Include(s => s.Query);
-            return View(await tekDeskContext.ToListAsync());
+            var solutions = _context.Solutions.Include(s => s.Employee).Include(s => s.Query);
+            if (queryID != null)
+            {
+                return View(await solutions.Where(s => s.QueryID == queryID).ToListAsync());
+            }
+            
+            return View(await solutions.ToListAsync());
         }
 
         // GET: Solutions/Details/5

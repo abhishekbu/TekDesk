@@ -33,7 +33,7 @@
         @foreach (var item in Model)
         {
 
-            <tr class="clickable">
+            <tr class="clickable" onclick="location.href = '@(Url.Action("Details", "Queries", new { id = item.QueryID } ))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>

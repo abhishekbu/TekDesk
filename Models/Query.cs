@@ -27,6 +27,7 @@ namespace TekDesk.Models
 		[StringLength(500)]
 		public string Description { get; set; }
 
+		[Display(Name = "Current State")]
 		public States QState { get; set; }
 
 		// .HasDefaultValueSql("getdate()");

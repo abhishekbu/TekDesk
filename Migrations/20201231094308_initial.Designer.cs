@@ -10,7 +10,7 @@ using TekDesk.Data;
 namespace TekDesk.Migrations
 {
     [DbContext(typeof(TekDeskContext))]
-    [Migration("20201231053417_initial")]
+    [Migration("20201231094308_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
