@@ -61,6 +61,11 @@ namespace TekDesk.Controllers
         // GET: Queries/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("EmployeeId") == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+                
             ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName");
             return View();
         }
@@ -81,6 +86,11 @@ namespace TekDesk.Controllers
 
                 _context.Add(query);
                 await _context.SaveChangesAsync();
+
+                // Notification
+
+
+
                 return RedirectToAction(nameof(MyQueries));
             }
             //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", query.EmployeeID);
@@ -199,6 +209,12 @@ namespace TekDesk.Controllers
         {
             var query = await _context.Queries.FindAsync(id);
             var solutions = _context.Solutions.Include(s => s.Artifact).Where(s => s.QueryID == id).ToList();
+            var notifications = _context.EmployeeNotifications.Where(n => n.QueryID == id).ToList();
+
+            foreach(var n in notifications)
+            {
+                _context.EmployeeNotifications.Remove(n);
+            }
 
             foreach (var s in solutions)
             {

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +16,12 @@ namespace TekDesk.Controllers
     public class SolutionsController : Controller
     {
         private readonly TekDeskContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public SolutionsController(TekDeskContext context)
+        public SolutionsController(TekDeskContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: Solutions
@@ -47,15 +52,36 @@ namespace TekDesk.Controllers
             {
                 return NotFound();
             }
-
+            
             return View(solution);
         }
 
         // GET: Solutions/Create
-        public IActionResult Create()
+        public IActionResult Create(int? queryID)
         {
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName");
-            ViewData["QueryID"] = new SelectList(_context.Queries, "QueryID", "QueryID");
+            //ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName");
+            //ViewData["QueryID"] = new SelectList(_context.Queries, "QueryID", "QueryID");
+
+            if (HttpContext.Session.GetString("EmployeeId") == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (queryID == null)
+            {
+                return RedirectToAction("Index", "Queries");
+            }
+
+            var query = _context.Queries.Where(q => q.QueryID == queryID).SingleOrDefault();
+
+            if (query == null)
+            {
+                return RedirectToAction("Index", "Queries");
+            }
+
+            TempData["queryID"] = queryID;
+
+            ViewData["queryDesc"] = query.Description;
             return View();
         }
 
@@ -64,14 +90,45 @@ namespace TekDesk.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Description,Added,EmployeeID,QueryID")] Solution solution)
+        public async Task<IActionResult> Create(Solution solution, IFormFile file)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(solution);
+
+                solution.Added = DateTime.Now;
+
+                var employeeID = int.Parse(HttpContext.Session.GetString("EmployeeId"));
+
+                solution.EmployeeID = employeeID;
+
+                if (TempData.ContainsKey("queryID"))
+                    solution.QueryID = (int)TempData["queryID"];
+
+                solution.QueryID = solution.QueryID;
+
+                if (file != null)
+                {
+                    var dir = _env.ContentRootPath + "\\FileUploads";
+
+                    using (var filestream = new FileStream(Path.Combine(dir, file.FileName), FileMode.Create, FileAccess.Write))
+                    {
+                        await file.CopyToAsync(filestream);
+                    }
+
+                    var artifact = new Artifact();
+                    artifact.Name = file.FileName;
+                    artifact.file = Path.Combine(dir, file.FileName);
+                    artifact.SolutionID = solution.ID;
+                    artifact.Type = file.FileName.Split(".").Last();
+
+                    _context.Artifacts.Add(artifact);
+                }
+
+                _context.Solutions.Add(solution);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", solution.EmployeeID);
             ViewData["QueryID"] = new SelectList(_context.Queries, "QueryID", "QueryID", solution.QueryID);
             return View(solution);
