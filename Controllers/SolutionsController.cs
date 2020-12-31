@@ -72,7 +72,10 @@ namespace TekDesk.Controllers
                 return RedirectToAction("Index", "Queries");
             }
 
-            var query = _context.Queries.Where(q => q.QueryID == queryID).SingleOrDefault();
+            var query = _context.Queries
+                .Include(q => q.Employee)
+                .Where(q => q.QueryID == queryID)
+                .SingleOrDefault();
 
             if (query == null)
             {
@@ -80,7 +83,7 @@ namespace TekDesk.Controllers
             }
 
             TempData["queryID"] = queryID;
-
+            ViewData["EmployeeName"] = query.Employee.FullName;
             ViewData["queryDesc"] = query.Description;
             return View();
         }
@@ -102,9 +105,14 @@ namespace TekDesk.Controllers
                 solution.EmployeeID = employeeID;
 
                 if (TempData.ContainsKey("queryID"))
+                {
                     solution.QueryID = (int)TempData["queryID"];
-
-                solution.QueryID = solution.QueryID;
+                    TempData.Remove("queryID");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Queries");
+                }
 
                 if (file != null)
                 {

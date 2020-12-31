@@ -35,6 +35,7 @@ namespace TekDesk.Controllers
             {
 				var employee = _tekDeskContext.Employees.Where(e => e.ID == int.Parse(empId)).SingleOrDefault();
 
+
 				if (employee != null)
 				{
 					HttpContext.Session.SetString("EmployeeId", empId);

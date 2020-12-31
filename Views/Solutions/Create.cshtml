@@ -10,6 +10,7 @@
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <p class="font-weight-bold">Employee : @ViewData["EmployeeName"]</p>
             <p class="font-weight-bolder">Query : @ViewData["queryDesc"]</p>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

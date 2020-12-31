@@ -13,6 +13,7 @@ namespace TekDesk.Models
 		public int ID { get; set; }
 
 		[StringLength(500)]
+		[Display(Name = "Solution")]
 		public string Description { get; set; }
 
 		public DateTime Added { get; set; }

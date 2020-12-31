@@ -26,6 +26,26 @@ namespace TekDesk.Controllers
             return View(await _context.Employees.ToListAsync());
         }
 
+        // GET: Notifications
+        public async Task<IActionResult> Notification()
+        {
+            var employeeId = HttpContext.Session.GetString("EmployeeId");
+
+            if (employeeId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var employeesNotifications = _context.EmployeeNotifications
+                .Include(en => en.Query)
+                    .ThenInclude(q => q.Employee)
+                .Where(en => en.EmployeeID == int.Parse(employeeId));
+
+            var notifications = await employeesNotifications.ToListAsync();
+
+            return View(notifications);
+        }
+
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(int? id)
         {

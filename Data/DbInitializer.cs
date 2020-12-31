@@ -41,19 +41,19 @@ namespace TekDesk.Data
             var queries = new Query[]
             {
                 new Query{Description="Network Device not connecting", 
-                    EmployeeID=1003, QState=States.pending, Tag=Tags.Network, 
+                    EmployeeID=1003, QState=States.pending, Tag=Expertise.Network, 
                     Added=DateTime.Now},
                 new Query{Description="OS showing not activated", 
-                    EmployeeID=1005, QState=States.pending, Tag=Tags.Software, 
+                    EmployeeID=1005, QState=States.pending, Tag=Expertise.Software, 
                     Added=DateTime.Now},
                 new Query{Description="MS office Not Installing", 
-                    EmployeeID=1004, QState=States.pending, Tag=Tags.Software, 
+                    EmployeeID=1004, QState=States.pending, Tag=Expertise.Software, 
                     Added=DateTime.Now},
                 new Query{Description="Server crashed", 
-                    EmployeeID=1002, QState=States.pending, Tag=Tags.Network, 
+                    EmployeeID=1002, QState=States.pending, Tag=Expertise.Network, 
                     Added=DateTime.Now},
                 new Query{Description="Keyborad not functioning correctly", 
-                    EmployeeID=1002, QState=States.pending, Tag=Tags.Hardware, 
+                    EmployeeID=1002, QState=States.pending, Tag=Expertise.Hardware, 
                     Added=DateTime.Now},
             };
 

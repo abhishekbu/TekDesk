@@ -12,13 +12,6 @@ namespace TekDesk.Models
 		pending, closed
 	}
 
-	public enum Tags
-	{
-		Hardware,
-		Software,
-		Network,
-	}
-
 	public class Query
 	{
 		[Key]
@@ -37,7 +30,7 @@ namespace TekDesk.Models
 		public int EmployeeID { get; set; }
 
 		[Display(Name = "Type")]
-		public Tags Tag { get; set; }
+		public Expertise Tag { get; set; }
 
 		public Employee Employee { get; set; }
 		public ICollection<Solution> Solutions { get; set; }
