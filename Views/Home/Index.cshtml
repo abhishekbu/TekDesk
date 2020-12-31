@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-4 h-100 border px-3 py-4">
+        <h2 class="mb-4">Login</h2>
+        <form asp-action="Store" method="post" asp-route-empId="">
+            <div class="mb-3">
+                <label for="EmployeeId" class="form-label">Employee Id</label>
+                <input type="text" name="empId" class="form-control" id="EmployeeId" aria-describedby="EmployeeId">
+            </div>
+            <button type="submit" class="btn btn-primary">Continue</button>
+        </form>
+    </div>
+</div>
+

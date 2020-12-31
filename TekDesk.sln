@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekDesk", "TekDesk.csproj", "{6983E0CC-4DD6-4EF0-B754-80D340968FBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6983E0CC-4DD6-4EF0-B754-80D340968FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6983E0CC-4DD6-4EF0-B754-80D340968FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6983E0CC-4DD6-4EF0-B754-80D340968FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6983E0CC-4DD6-4EF0-B754-80D340968FBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EDC1BC89-90F1-474B-9BF0-B0E38FCBF806}
+	EndGlobalSection
+EndGlobal
