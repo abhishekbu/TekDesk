@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FileUploads\" />
     <Folder Include="Models\TekDeskViewModels\" />
     <Folder Include="Services\" />
   </ItemGroup>

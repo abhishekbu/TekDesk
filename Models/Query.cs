@@ -9,7 +9,8 @@ namespace TekDesk.Models
 {
 	public enum States
 	{
-		pending, closed
+		pending, 
+		closed
 	}
 
 	public class Query

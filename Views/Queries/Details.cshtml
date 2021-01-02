@@ -42,10 +42,14 @@
             @Html.DisplayFor(model => model.Added)
         </dd>
     </dl>
+
     <div>
         <a asp-action="Edit" asp-route-id="@Model.QueryID" class="btn btn-primary">Edit</a>
         <a asp-action="Delete" asp-route-id="@Model.QueryID" class="btn btn-danger">Delete</a>
-        <a asp-action="Create" asp-controller="Solutions" asp-route-queryID="@Model.QueryID" class="btn btn-info">Give Solution</a>
+        @if (Model.QState == States.pending)
+        {
+            <a asp-action="Create" asp-controller="Solutions" asp-route-queryID="@Model.QueryID" class="btn btn-info">Give Solution</a>
+        }
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         <a asp-action="Index" asp-controller="Solutions" asp-route-queryID="@Model.QueryID" class="btn btn-warning">View Solutions</a>
     </div>

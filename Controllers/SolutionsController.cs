@@ -25,16 +25,67 @@ namespace TekDesk.Controllers
             _env = env;
         }
 
-        // GET: Solutions
-        public async Task<IActionResult> Index(int? queryID)
+        private IQueryable<Solution> sorting(string sortOrder, IQueryable<Solution> solutions)
         {
-            var solutions = _context.Solutions.Include(s => s.Employee).Include(s => s.Query);
-            if (queryID != null)
+
+            switch (sortOrder)
             {
-                return View(await solutions.Where(s => s.QueryID == queryID).ToListAsync());
+                case "Date":
+                    solutions = solutions.OrderBy(q => q.Added);
+                    break;
+                case "date_desc":
+                    solutions = solutions.OrderByDescending(q => q.Added);
+                    break;
+                default:
+                    break;
             }
 
-            return View(await solutions.ToListAsync());
+            return solutions;
+        }
+
+        // GET: Solutions
+        public async Task<IActionResult> Index(
+            int? queryID, 
+            string sortOrder,
+            string currentFilter,
+            string searchTerm,
+            int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["DateSortParam"] = sortOrder == "Date" ? "date_desc" : "Date";
+            
+            if (searchTerm != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchTerm = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchTerm;
+            
+            var solutions = _context.Solutions.Include(s => s.Employee).Include(s => s.Query).Select(s => s);
+
+            solutions = sorting(sortOrder, solutions);
+
+            int pageSize = 1;
+
+            if (queryID != null)
+            {
+                ViewData["queryID"] = queryID;
+
+                if (searchTerm != null)
+                {
+                    solutions = solutions.Where(s => s.Employee.FName.Contains(searchTerm)
+                        || s.Employee.LName.Contains(searchTerm));
+                }
+
+                return View(await PaginatedList<Solution>.CreateAsync(solutions.Where(s => s.QueryID == queryID).AsNoTracking(), pageNumber ?? 1, pageSize));
+                
+            }
+
+            return View(await PaginatedList<Solution>.CreateAsync(solutions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Solutions/Details/5
@@ -257,9 +308,14 @@ namespace TekDesk.Controllers
                 .Include(s => s.Query)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
+            if (solution == null)
+            {
+                return RedirectToAction("Details", "Queries", new { id = (int)TempData["QueryID"] });
+            }
+
             var employeeId = HttpContext.Session.GetString("EmployeeId");
 
-            if ((employeeId == null) || (int.Parse(employeeId) != solution.EmployeeID))
+            if ((employeeId == null)  ||(int.Parse(employeeId) != solution.EmployeeID))
             {
                 return RedirectToAction("Index", "Home");
             }

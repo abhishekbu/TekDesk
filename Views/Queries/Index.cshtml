@@ -1,32 +1,82 @@
-﻿@model IEnumerable<TekDesk.Models.Query>
+﻿@model PaginatedList<TekDesk.Models.Query>
 
 @{
     ViewData["Title"] = "Index";
+
+    var url = @Context.Request.Path.ToString();
+    var action = "Index";
+
+    if (url.Contains("MyQueries"))
+    {
+        action = "MyQueries";
+    }
 }
 
+<h1 class="mb-4">@TempData["Title"]</h1>
 
-<h1 class="mb-4">All Queries</h1>
+<div class="row">
+    <div class="col-md-3">
+        <form asp-action="@action" method="get" class="mb-3">
+            <div class="row">
+                <p class="col-md-6 my-auto">
+                    <select name="stateFilter" class="form-control" asp-items="Html.GetEnumSelectList<States>()">
+                    </select>
+                </p>
+                <div class="col-md-6 my-auto">
+                    <input type="submit" value="Select" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="@action" method="get" class="mb-3">
+            <div class="row">
+                <p class="col-md-6 my-auto">
+                    <select name="typeFilter" class="form-control" asp-items="Html.GetEnumSelectList<Expertise>()">
+                    </select>
+                </p>
+                <div class="col-md-6 my-auto">
+                    <input type="submit" value="Select" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+    @if (!url.Contains("MyQueries"))
+    {
+        <div class="col-md-5">
+            <form asp-action="@action" method="get">
+                <div class="form-actions no-color">
+                    <p class="my-auto">
+                        Search by name: <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" />
+                        <input type="submit" value="Search" class="btn btn-outline-primary" />
+                        <a asp-action="@action" class="btn btn-secondary">Back to Full List</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    }
+</div>
 
-<table class="table table-hover">
+
+<table class="table table-hover styled-table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Full Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee.FullName)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.QState)
+                <a class="link" asp-action="@action" asp-route-sortOrder="@ViewData["StateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">State <i class="fas fa-sort"></i></a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Added)
+                <a class="link" asp-action="@action" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Date Added <i class="fas fa-sort"></i></a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tag)
+                Type
             </th>
 
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -35,10 +85,10 @@
 
             <tr class="clickable" onclick="location.href = '@(Url.Action("Details", "Queries", new { id = item.QueryID } ))'">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Employee.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Employee.FullName)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.QState)
@@ -53,3 +103,24 @@
         }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+

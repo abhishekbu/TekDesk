@@ -1,53 +1,81 @@
-﻿@model IEnumerable<TekDesk.Models.Solution>
+﻿@model PaginatedList<TekDesk.Models.Solution>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Solutions</h1>
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Index" method="get">
+            <div class="form-actions no-color">
+                <p class="my-auto">
+                    Search by name: <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" />
+                    <input type="submit" value="Search" class="btn btn-outline-primary" />
+                    <input type="hidden" name="queryID" value="@ViewData["queryID"]" />
+                    <a asp-action="Index" asp-route-queryID="@ViewData["queryID"]" class="btn btn-secondary">Back to Full List</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-hover styled-table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Added)
+                <a class="link" asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]" asp-route-queryID="@ViewData["queryID"]">Date Added</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Query)
+                Query
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee)
+                Employee Added
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Added)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Query.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.FName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr class="clickable" onclick="location.href = '@(Url.Action("Details", "Solutions", new { id = item.ID } ))'">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Added)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Query.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.FName)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   asp-route-queryID="@ViewData["queryID"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   asp-route-queryID="@ViewData["queryID"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

@@ -19,19 +19,24 @@ namespace TekDesk.Controllers
         //GET api/download/12345abc
         public IActionResult Download(string filename)
         {
-            var filepath = _env.ContentRootPath + "\\FileUploads\\" + filename;
+            try
+            {
+                var filepath = _env.ContentRootPath + "\\FileUploads\\" + filename;
 
-            var net = new System.Net.WebClient();
-            var data = net.DownloadData(filepath);
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(filepath);
 
-            var stream = new System.IO.MemoryStream(data);
+                var stream = new System.IO.MemoryStream(data);
 
-            if (stream == null)
-                return NotFound(); // returns a NotFoundResult with Status404NotFound response.
+                if (stream == null)
+                    return NotFound(); // returns a NotFoundResult with Status404NotFound response.
 
-            return File(stream, "application/octet-stream", filename); // returns a FileStreamResult
-   
-
+                return File(stream, "application/octet-stream", filename); // returns a FileStreamResult
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }
