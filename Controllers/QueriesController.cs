@@ -30,6 +30,7 @@ namespace TekDesk.Controllers
         public async Task<IActionResult> MyQueries()
         {
             var employeeId = HttpContext.Session.GetString("EmployeeId");
+
             if (employeeId != null)
             {
                 var queries = _context.Queries.Include(q => q.Employee).Where(q => q.Employee.ID == int.Parse(employeeId)).OrderByDescending(q => q.Added);
@@ -77,7 +78,7 @@ namespace TekDesk.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QueryID,Description,QState,Added,EmployeeID,Tag")] Query query)
+        public async Task<IActionResult> Create(Query query)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +88,8 @@ namespace TekDesk.Controllers
                 query.QState = States.pending;
 
                 _context.Add(query);
-                
+                await _context.SaveChangesAsync();
+
                 var employeeSubjects = _context.EmployeeSubjects
                     .Include(es => es.Subject)
                     .Include(es => es.Employee);

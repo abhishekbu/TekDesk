@@ -40,6 +40,7 @@ namespace TekDesk
 				options.Cookie.IsEssential = true;
 			});
 
+			//services.AddSingleton<FileManager>();
 
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 		}

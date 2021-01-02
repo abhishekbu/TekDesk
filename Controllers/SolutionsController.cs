@@ -13,6 +13,7 @@ using TekDesk.Models;
 
 namespace TekDesk.Controllers
 {
+
     public class SolutionsController : Controller
     {
         private readonly TekDeskContext _context;
@@ -32,7 +33,7 @@ namespace TekDesk.Controllers
             {
                 return View(await solutions.Where(s => s.QueryID == queryID).ToListAsync());
             }
-            
+
             return View(await solutions.ToListAsync());
         }
 
@@ -47,12 +48,16 @@ namespace TekDesk.Controllers
             var solution = await _context.Solutions
                 .Include(s => s.Employee)
                 .Include(s => s.Query)
+                .Include(s => s.Artifact)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (solution == null)
             {
                 return NotFound();
             }
-            
+
+            //ViewData["ArtifactName"] = solution.Artifact.Name;
+
             return View(solution);
         }
 
@@ -107,12 +112,14 @@ namespace TekDesk.Controllers
                 if (TempData.ContainsKey("queryID"))
                 {
                     solution.QueryID = (int)TempData["queryID"];
-                    TempData.Remove("queryID");
                 }
                 else
                 {
                     return RedirectToAction("Index", "Queries");
                 }
+
+                _context.Solutions.Add(solution);
+                await _context.SaveChangesAsync();
 
                 if (file != null)
                 {
@@ -123,6 +130,10 @@ namespace TekDesk.Controllers
                         await file.CopyToAsync(filestream);
                     }
 
+                    //var solID = _context.Solutions
+                    //    .Where(sol => (sol.EmployeeID == employeeID) && (sol.QueryID == (int)TempData["queryID"]))
+                    //    .OrderByDescending(sol => sol.Added).ToList().FirstOrDefault();
+
                     var artifact = new Artifact();
                     artifact.Name = file.FileName;
                     artifact.file = Path.Combine(dir, file.FileName);
@@ -130,11 +141,11 @@ namespace TekDesk.Controllers
                     artifact.Type = file.FileName.Split(".").Last();
 
                     _context.Artifacts.Add(artifact);
+                    await _context.SaveChangesAsync();
                 }
 
-                _context.Solutions.Add(solution);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index), new { queryID = (int)TempData["queryID"] });
             }
 
             ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", solution.EmployeeID);
@@ -150,13 +161,22 @@ namespace TekDesk.Controllers
                 return NotFound();
             }
 
-            var solution = await _context.Solutions.FindAsync(id);
+            var solution = await _context.Solutions.Include(s => s.Artifact).Where(s => s.ID == id).FirstOrDefaultAsync();
+
+            var employeeId = HttpContext.Session.GetString("EmployeeId");
+
+            if ((employeeId == null) || (int.Parse(employeeId) != solution.EmployeeID))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (solution == null)
             {
                 return NotFound();
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", solution.EmployeeID);
-            ViewData["QueryID"] = new SelectList(_context.Queries, "QueryID", "QueryID", solution.QueryID);
+
+            TempData["QueryID"] = solution.QueryID;
+
             return View(solution);
         }
 
@@ -165,18 +185,46 @@ namespace TekDesk.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,Added,EmployeeID,QueryID")] Solution solution)
+        public async Task<IActionResult> Edit(Solution solution, IFormFile file)
         {
-            if (id != solution.ID)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    solution.Added = DateTime.Now;
+                    if (TempData.ContainsKey("QueryID"))
+                        solution.QueryID = (int)TempData["QueryID"];
+                    else
+                        return NotFound();
+                    solution.EmployeeID = int.Parse(HttpContext.Session.GetString("EmployeeId"));
                     _context.Update(solution);
+
+                    if (file != null)
+                    {
+                        var currentArtifact = await _context.Artifacts.Where(a => a.SolutionID == solution.ID).FirstOrDefaultAsync();
+
+                        if (currentArtifact != null)
+                        {
+                            _context.Artifacts.Remove(currentArtifact);
+                        }
+
+                        var dir = _env.ContentRootPath + "\\FileUploads";
+
+                        using (var filestream = new FileStream(Path.Combine(dir, file.FileName), FileMode.Create, FileAccess.Write))
+                        {
+                            await file.CopyToAsync(filestream);
+                        }
+
+                        var artifact = new Artifact
+                        {
+                            Name = file.FileName,
+                            file = Path.Combine(dir, file.FileName),
+                            SolutionID = solution.ID,
+                            Type = file.FileName.Split(".").Last()
+                        };
+                        _context.Artifacts.Add(artifact);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -190,10 +238,9 @@ namespace TekDesk.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { queryID = solution.QueryID });
             }
-            ViewData["EmployeeID"] = new SelectList(_context.Employees, "ID", "FName", solution.EmployeeID);
-            ViewData["QueryID"] = new SelectList(_context.Queries, "QueryID", "QueryID", solution.QueryID);
+
             return View(solution);
         }
 
@@ -209,6 +256,14 @@ namespace TekDesk.Controllers
                 .Include(s => s.Employee)
                 .Include(s => s.Query)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+            var employeeId = HttpContext.Session.GetString("EmployeeId");
+
+            if ((employeeId == null) || (int.Parse(employeeId) != solution.EmployeeID))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (solution == null)
             {
                 return NotFound();
@@ -223,9 +278,24 @@ namespace TekDesk.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var solution = await _context.Solutions.FindAsync(id);
+
+
+            var artifact = _context.Artifacts.Where(a => a.SolutionID == solution.ID).FirstOrDefault();
+
+            if (artifact != null)
+            {
+                var fileName = artifact.file;
+
+                if (System.IO.File.Exists(fileName))
+                {
+                    System.IO.File.Delete(fileName);
+                }
+            }
+
             _context.Solutions.Remove(solution);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction("Index", "Solutions", new { queryID = solution.QueryID });
         }
 
         private bool SolutionExists(int id)
