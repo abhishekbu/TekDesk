@@ -1,0 +1,131 @@
+17:51:03:190 (00002192) > [Startup] Rise of the Tomb Raider
+17:51:03:190 (00002192) > [Startup] ==============
+17:51:03:190 (00002192) > [Startup] 
+17:51:03:190 (00002192) > [Startup] Build: v1.0 build 668.1_64
+17:51:03:190 (00002192) > [Startup] Unknown new Windows version, 10.0 (build 19042)
+17:51:03:190 (00002192) > [Startup] Game directory: C:\Users\ABHISHEK B U\Documents\Rise of the Tomb Raider\
+17:51:03:190 (00002192) > [Startup] 
+17:51:03:190 (00002192) > [Startup] Memory statistics:
+17:51:03:190 (00002192) > [Startup]   Total RAM = 15.9 GB (16295 MB)
+17:51:03:190 (00002192) > [Startup]   Avail RAM = 11.8 GB (12118 MB)
+17:51:03:190 (00002192) > [Startup]   Total virtual memory = 131072.0 GB (134217727 MB)
+17:51:03:190 (00002192) > [Startup]   Avail virtual memory = 131064.7 GB (134210296 MB)
+17:51:03:190 (00002192) > [Startup] 
+17:51:03:190 (00002192) > [NxApp] PreInit
+17:51:03:190 (00002192) > [Steam] Initializing.
+17:51:03:190 (00002192) > [Steam] Successfully initialized.
+17:51:03:190 (00002192) > [SwapChain] Initializing...
+17:51:03:190 (00002192) > [DXGI] Initializing...
+17:51:03:206 (00002192) > [DXGI] Successfully initialized.
+17:51:03:206 (00002192) > [Render] Enumerating adapters:
+17:51:03:206 (00002192) > [Render] 	Adapter 0:
+17:51:03:206 (00002192) > [Monitor] 		Description             : NVIDIA GeForce MX110
+17:51:03:206 (00002192) > [Monitor] 		Vendor                  : nVidia (10de)
+17:51:03:206 (00002192) > [Monitor] 		Device                  : 174e
+17:51:03:206 (00002192) > [Monitor] 		Sub system              : 84a7103c
+17:51:03:206 (00002192) > [Monitor] 		Revision                : 162
+17:51:03:206 (00002192) > [Monitor] 		Dedicated Video Memory  : 2010 MB
+17:51:03:206 (00002192) > [Monitor] 		Dedicated System Memory : 0000 MB
+17:51:03:206 (00002192) > [Monitor] 		Shared System Memory    : 8147 MB
+17:51:03:206 (00002192) > [Monitor] 
+17:51:03:206 (00002192) > [Render] Loading NVAPI...
+17:51:03:206 (00002192) > [Render] NVidia 3D Vision NvAPI_Stereo_IsEnabled error.
+17:51:03:206 (00002192) > [Render] Done loading NVAPI
+17:51:03:206 (00002192) > [Render] 	Adapter 1:
+17:51:03:206 (00002192) > [Monitor] 		Description             : Intel(R) UHD Graphics 620
+17:51:03:206 (00002192) > [Monitor] 		Vendor                  : Intel (8086)
+17:51:03:206 (00002192) > [Monitor] 		Device                  : 5917
+17:51:03:206 (00002192) > [Monitor] 		Sub system              : 84a7103c
+17:51:03:206 (00002192) > [Monitor] 		Revision                : 7
+17:51:03:206 (00002192) > [Monitor] 		Dedicated Video Memory  : 0128 MB
+17:51:03:206 (00002192) > [Monitor] 		Dedicated System Memory : 0000 MB
+17:51:03:206 (00002192) > [Monitor] 		Shared System Memory    : 8147 MB
+17:51:03:206 (00002192) > [Monitor] 
+17:51:03:206 (00002192) > [Render] 	Adapter 2:
+17:51:03:206 (00002192) > [Monitor] 		Description             : Microsoft Basic Render Driver
+17:51:03:206 (00002192) > [Monitor] 		Vendor                  : Unknown (1414)
+17:51:03:206 (00002192) > [Monitor] 		Device                  : 8c
+17:51:03:206 (00002192) > [Monitor] 		Sub system              : 0
+17:51:03:206 (00002192) > [Monitor] 		Revision                : 0
+17:51:03:206 (00002192) > [Monitor] 		Dedicated Video Memory  : 0000 MB
+17:51:03:206 (00002192) > [Monitor] 		Dedicated System Memory : 0000 MB
+17:51:03:206 (00002192) > [Monitor] 		Shared System Memory    : 8147 MB
+17:51:03:206 (00002192) > [Monitor] 
+17:51:03:206 (00002192) > [Render] Enumerating monitors:
+17:51:03:206 (00002192) > [Render] 	Monitor 0: handle = 0000000000010001, aspect = 1.78
+17:51:03:206 (00002192) > [Render] 
+17:51:03:687 (00002192) > [Render] NVidia 3D Vision NvAPI_Stereo_SetDriverMode error.
+17:51:03:687 (00002192) > [Render] NVidia 3D Vision is not enabled.
+17:51:03:687 (00002192) > [Render] Enumerating Display Modes:
+17:51:03:687 (00002192) > [Render] Querying NVAPI for Surround modes
+17:51:03:687 (00002192) > [Render] NvAPI_DISP_GetGDIPrimaryDisplayId returned NVAPI_NVIDIA_DEVICE_NOT_FOUND (fffffffa)
+
+17:51:03:687 (00002192) > [Render] 	Monitor '1 (NVIDIA GeForce MX110(1))' (0000000000010001):
+17:51:03:687 (00002192) > [Render] 		- Mode  0 : 1024 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  1 : 1024 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  2 : 1024 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  3 : 1024 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  4 : 1152 x  864 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  5 : 1152 x  864 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  6 : 1152 x  864 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  7 : 1152 x  864 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  8 : 1280 x  600 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode  9 : 1280 x  600 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 10 : 1280 x  600 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 11 : 1280 x  600 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 12 : 1280 x  720 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 13 : 1280 x  720 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 14 : 1280 x  720 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 15 : 1280 x  720 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 16 : 1280 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 17 : 1280 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 18 : 1280 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 19 : 1280 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 20 : 1280 x  800 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 21 : 1280 x  800 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 22 : 1280 x  800 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 23 : 1280 x  800 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 24 : 1280 x  960 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 25 : 1280 x  960 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 26 : 1280 x  960 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 27 : 1280 x  960 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 28 : 1280 x 1024 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 29 : 1280 x 1024 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 30 : 1280 x 1024 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 31 : 1280 x 1024 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 32 : 1360 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 33 : 1360 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 34 : 1360 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 35 : 1360 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 36 : 1366 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 37 : 1366 x  768 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 38 : 1366 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 39 : 1366 x  768 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 40 : 1400 x 1050 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 41 : 1400 x 1050 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 42 : 1400 x 1050 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 43 : 1400 x 1050 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 44 : 1440 x  900 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 45 : 1440 x  900 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 46 : 1440 x  900 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 47 : 1440 x  900 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 48 : 1600 x  900 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 49 : 1600 x  900 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 50 : 1600 x  900 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 51 : 1600 x  900 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 52 : 1680 x 1050 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 53 : 1680 x 1050 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 54 : 1680 x 1050 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 55 : 1680 x 1050 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 56 : 1920 x 1080 @  40 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 		- Mode 57 : 1920 x 1080 @  60 Hz, stereo = 0, hdr = 0
+17:51:03:687 (00002192) > [Render] 
+17:51:03:687 (00002192) > [SwapChain] Successfully initialized.
+17:51:03:687 (00002192) > [NxApp] PreInit successful.
+17:51:03:687 (00002192) > [Main] Current directory: C:\Games\Rise of the Tomb Raider
+17:51:03:687 (00002192) > [Main] Working directory: C:\Games\Rise of the Tomb Raider
+17:51:03:703 (00002192) > [MultiCore] CPU count: logical = 8
+17:51:03:781 (00002192) > [Main] Steam Language: '(null)'
+17:51:03:781 (00002192) > [Main] Settings: Text Language: 'en-us' | VO Language: 'en-us' | Steam Game Language 'en-us'
+17:51:03:781 (00002192) > [Main] Using: Text Language: 'en-us' | VO Language: 'en-us'
+17:51:04:059 (00002192) > [Validate Settings] Desktop settings (Resolution: 1920 x 1080, Multi-monitor: off, Bezel correction: off)

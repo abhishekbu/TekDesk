@@ -4,9 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1 class="display-4">Details</h1>
 
-<div>
+<div class="jumbotron">
     <h4>Solution</h4>
     <hr />
     <dl class="row">
@@ -24,14 +24,14 @@
                 var artifact = @Model.Artifact ?? null;
 
                 string Name = String.Empty;
-                if(artifact != null)
+                if (artifact != null)
                 {
                     Name = artifact.Name;
                 }
             }
 
-           <a asp-controller="Download" asp-action="Download" asp-route-filename="@Name">@Name</a>
-           
+            <a asp-controller="Download" asp-action="Download" asp-route-filename="@Name">@Name</a>
+
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Added)
@@ -52,9 +52,9 @@
             @Html.DisplayFor(model => model.Employee.FullName)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Edit</a> 
-    <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a> 
-    <a asp-action="Index" asp-route-queryID="@Model.QueryID" class="btn btn-secondary">Back to List</a>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a>
+        <a asp-action="Index" asp-route-queryID="@Model.QueryID" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>

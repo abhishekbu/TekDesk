@@ -9,17 +9,14 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover clickable">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LName)
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th></th>
         </tr>
@@ -27,21 +24,13 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr onclick="location.href = '@(Url.Action("Details", "Employees", new { id = item.ID } ))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.ID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>     
             </tr>
         }
     </tbody>

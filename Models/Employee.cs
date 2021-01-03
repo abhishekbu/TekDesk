@@ -25,7 +25,7 @@ namespace TekDesk.Models
 		[StringLength(50)]
 		public string LName { get; set; }
 
-		[Display(Name = "Employee")]
+		[Display(Name = "Employee Name")]
 		public string FullName {
 			get
 			{

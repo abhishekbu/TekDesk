@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TekDesk.Data;
 using TekDesk.Models;
+using TekDesk.Models.TekDeskViewModels;
 
 namespace TekDesk.Controllers
 {
@@ -54,14 +55,20 @@ namespace TekDesk.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var viewModel = new EmployeeExpertiseData();
+            viewModel.Employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (employee == null)
+
+            if (viewModel.Employee == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            viewModel.EmployeeSubjects = await _context.EmployeeSubjects
+                .Include(es => es.Subject)
+                .Where(es => es.EmployeeID == id).ToListAsync();
+
+            return View(viewModel);
         }
 
         // GET: Employees/Create

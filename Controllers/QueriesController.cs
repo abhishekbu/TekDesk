@@ -253,9 +253,10 @@ namespace TekDesk.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Description,QState,EmployeeID,Tag")] Query query)
+        public async Task<IActionResult> Edit(int id, Query query)
         {
             query.EmployeeID = int.Parse(HttpContext.Session.GetString("EmployeeId"));
+            query.Added = DateTime.Now;
             query.QueryID = id;
 
             if (id != query.QueryID)
