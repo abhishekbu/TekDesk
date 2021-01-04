@@ -42,26 +42,15 @@ namespace TekDesk.Controllers
             return queries;
         }
 
-        private IQueryable<Query> queryFilter(IQueryable<Query> queries, States? state)
-        {
-            queries = queries.Where(q => q.QState == state);
-            return queries;
-        }
-
-        private IQueryable<Query> typesFilter(IQueryable<Query> queries, Expertise? type)
-        {
-            queries = queries.Where(q => q.Tag == type);
-            return queries;
-        }
-
         // GET: Queries
-        public async Task<IActionResult> Index(States? stateFilter, 
-            Expertise? typeFilter, 
+        public async Task<IActionResult> Index(States? stateFilter,
+            Expertise? typeFilter,
             string sortOrder,
             string currentFilter,
             string searchTerm,
             int? pageNumber)
         {
+
             ViewData["StateSortParam"] = String.IsNullOrEmpty(sortOrder) ? "sort_pending" : "";
             ViewData["DateSortParam"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["SearchTerm"] = searchTerm;
@@ -79,25 +68,19 @@ namespace TekDesk.Controllers
             ViewData["CurrentFilter"] = searchTerm;
 
             var queries = _context.Queries.Include(q => q.Employee).Select(q => q);
-             
+
+
             if (!String.IsNullOrEmpty(searchTerm))
             {
-                queries = queries.Where(q => q.Employee.FName.Contains(searchTerm) 
-                    || q.Employee.LName.Contains(searchTerm));
-            }
-
-            if (stateFilter != null)
-            {
-                queries = queryFilter(queries, stateFilter);
-            }
-
-            if (typeFilter != null)
-            {
-                queries = typesFilter(queries, typeFilter);
+                queries = queries
+                    .Where(q => (q.Employee.FName
+                            + q.Employee.LName
+                            + q.Description
+                            + q.Added.Date.ToString())
+                            .Contains(searchTerm));
             }
 
             var Allqueries = sorting(sortOrder, queries);
-
 
             TempData["Title"] = "All Queries";
 
@@ -108,7 +91,8 @@ namespace TekDesk.Controllers
         public async Task<IActionResult> MyQueries(States? stateFilter, 
             Expertise? typeFilter, 
             string sortOrder, 
-            int? pageNumber)
+            int? pageNumber,
+            string searchTerm)
         {
             ViewData["StateSortParam"] = String.IsNullOrEmpty(sortOrder) ? "sort_pending" : "";
             ViewData["DateSortParam"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -120,14 +104,13 @@ namespace TekDesk.Controllers
             {
                 var queries = _context.Queries.Include(q => q.Employee).Where(q => q.EmployeeID == int.Parse(employeeId));
 
-                if (stateFilter != null)
+                if (!String.IsNullOrEmpty(searchTerm))
                 {
-                    queries = queryFilter(queries, stateFilter);
-                }
-
-                if (typeFilter != null)
-                {
-                    queries = typesFilter(queries, typeFilter);
+                    queries = queries
+                        .Where(q => q.Employee.FName.Contains(searchTerm)
+                                || q.Employee.LName.Contains(searchTerm)
+                                || q.Description.Contains(searchTerm)
+                                || q.Added.Date.ToString().Contains(searchTerm));
                 }
 
                 var myQueries = sorting(sortOrder, queries);
@@ -137,6 +120,9 @@ namespace TekDesk.Controllers
                 int pageSize = 3;
                 return View("Index" ,await PaginatedList<Query>.CreateAsync(myQueries.AsNoTracking(), pageNumber ?? 1, pageSize));
             }
+
+            TempData["EmployeeExists"] = false;
+            TempData["Message"] = "Login First!";
             return RedirectToAction("Index", "Home");
         }
 
@@ -167,6 +153,8 @@ namespace TekDesk.Controllers
         {
             if (HttpContext.Session.GetString("EmployeeId") == null)
             {
+                TempData["EmployeeExists"] = false;
+                TempData["Message"] = "Login First!";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -236,6 +224,8 @@ namespace TekDesk.Controllers
 
                 if (query.EmployeeID != int.Parse(employeeId) || employeeId == null)
                 {
+                    TempData["EmployeeExists"] = false;
+                    TempData["Message"] = "Cannot Edit! login with Correct credentials";
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -311,6 +301,8 @@ namespace TekDesk.Controllers
 
                 if (employeeID == null || int.Parse(employeeID) != query.EmployeeID)
                 {
+                    TempData["EmployeeExists"] = false;
+                    TempData["Message"] = "Cannot Delete! login with Correct credentials";
                     return RedirectToAction("Index", "Home");
                 }
 

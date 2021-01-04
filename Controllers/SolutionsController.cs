@@ -77,8 +77,11 @@ namespace TekDesk.Controllers
 
                 if (searchTerm != null)
                 {
-                    solutions = solutions.Where(s => s.Employee.FName.Contains(searchTerm)
-                        || s.Employee.LName.Contains(searchTerm));
+                    solutions = solutions
+                        .Where(s => s.Employee.FName.Contains(searchTerm)
+                                   || s.Employee.LName.Contains(searchTerm)
+                                   ||s.Description.Contains(searchTerm)
+                                   ||Convert.ToString(s.Added.Date).Contains(searchTerm));
                 }
 
                 return View(await PaginatedList<Solution>.CreateAsync(solutions.Where(s => s.QueryID == queryID).AsNoTracking(), pageNumber ?? 1, pageSize));
@@ -120,6 +123,8 @@ namespace TekDesk.Controllers
 
             if (HttpContext.Session.GetString("EmployeeId") == null)
             {
+                TempData["EmployeeExists"] = false;
+                TempData["Message"] = "Login First!";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -218,6 +223,8 @@ namespace TekDesk.Controllers
 
             if ((employeeId == null) || (int.Parse(employeeId) != solution.EmployeeID))
             {
+                TempData["EmployeeExists"] = false;
+                TempData["Message"] = "Cannot Edit! Login with Correct Credential";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -317,6 +324,8 @@ namespace TekDesk.Controllers
 
             if ((employeeId == null)  ||(int.Parse(employeeId) != solution.EmployeeID))
             {
+                TempData["EmployeeExists"] = false;
+                TempData["Message"] = "Cannot Delete! Login with Correct Credential";
                 return RedirectToAction("Index", "Home");
             }
 

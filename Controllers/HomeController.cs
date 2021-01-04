@@ -38,10 +38,13 @@ namespace TekDesk.Controllers
 
 				if (employee != null)
 				{
+					TempData["EmployeeExists"] = true;
 					HttpContext.Session.SetString("EmployeeId", empId);
 					return RedirectToAction("Index", "Queries");
 				}
 
+				TempData["EmployeeExists"] = false;
+				TempData["Message"] = "Login Failed! Employee doesn't Exist";
 				return RedirectToAction(nameof(Index));
 			}
 			catch

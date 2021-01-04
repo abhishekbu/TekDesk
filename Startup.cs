@@ -59,6 +59,8 @@ namespace TekDesk
 				app.UseHsts();
 			}
 			app.UseHttpsRedirection();
+
+
 			app.UseStaticFiles();
 
 			app.UseRouting();
@@ -66,6 +68,7 @@ namespace TekDesk
 			app.UseAuthorization();
 
 			app.UseSession();
+
 
 			app.UseEndpoints(endpoints =>
 			{

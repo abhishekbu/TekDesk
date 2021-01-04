@@ -15,7 +15,7 @@
 <h1 class="mb-4">@TempData["Title"]</h1>
 
 <div class="row">
-    <div class="col-md-3">
+    @*<div class="col-md-3">
         <form asp-action="@action" method="get" class="mb-3">
             <div class="row">
                 <p class="col-md-6 my-auto">
@@ -40,21 +40,21 @@
                 </div>
             </div>
         </form>
-    </div>
-    @if (!url.Contains("MyQueries"))
-    {
+    </div>*@
+    @*@if (!url.Contains("MyQueries"))
+    {*@
         <div class="col-md-5">
             <form asp-action="@action" method="get">
                 <div class="form-actions no-color">
                     <p class="my-auto">
-                        Search by name: <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" />
+                        Search: <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" />
                         <input type="submit" value="Search" class="btn btn-outline-primary" />
                         <a asp-action="@action" class="btn btn-secondary">Back to Full List</a>
                     </p>
                 </div>
             </form>
         </div>
-    }
+    @*}*@
 </div>
 
 
