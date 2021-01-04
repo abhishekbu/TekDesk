@@ -15,6 +15,9 @@
             <th>
                 Description Short
             </th>
+            <th>
+                Came At
+            </th>
         </tr>
     </thead>
 
@@ -24,6 +27,7 @@
             <tr class="clickable" onclick="location.href = '@(Url.Action("Details", "Queries", new { id = item.QueryID } ))'">
                 <td>@item.Query.Employee.FullName</td>
                 <td>@item.Notification</td>
+                <td>@item.Query.Added</td>
             </tr>
         }
     </tbody>

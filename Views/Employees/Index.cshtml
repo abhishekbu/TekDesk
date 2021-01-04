@@ -10,50 +10,54 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-hover clickable">
-    <thead>
-        <tr>
-            <th>
-                Employee ID
-            </th>
-            <th>
-                Employee Name
-            </th>
-            <th>
-                Expertise in
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Employees)
-        {
-            <tr onclick="location.href = '@(Url.Action("Details", "Employees", new { id = item.ID } ))'">
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    <table class="table styled-table">
-                        <thead>
-                            <tr>
-                                <td>Subject ID</td>
-                                <td>Subject Name</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                @foreach (var sub in Model.EmployeeSubjects.Where(e => e.EmployeeID == item.ID))
-                                {
-                                    <td>@sub.SubjectID</td>
-                                    <td>@sub.Subject.Name</td>  
-                                }
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
+<div class="row">
+    <table class="table styled-table table-hover clickable col-md-10 mx-auto">
+        <thead>
+            <tr>
+                <th>
+                    Employee ID
+                </th>
+                <th>
+                    Employee Name
+                </th>
+                <th>
+                    Expertise in
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Employees)
+            {
+                <tr onclick="location.href = '@(Url.Action("Details", "Employees", new { id = item.ID } ))'">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        <table class="table styled-table">
+                            <thead>
+                                <tr>
+                                    <td>Subject ID</td>
+                                    <td>Subject Name</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach (var sub in Model.EmployeeSubjects.Where(e => e.EmployeeID == item.ID))
+                                    {
+                                        <td>@sub.SubjectID</td>
+                                        <td>@sub.Subject.Name</td>
+
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -15,46 +15,17 @@
 <h1 class="mb-4">@TempData["Title"]</h1>
 
 <div class="row">
-    @*<div class="col-md-3">
-        <form asp-action="@action" method="get" class="mb-3">
-            <div class="row">
-                <p class="col-md-6 my-auto">
-                    <select name="stateFilter" class="form-control" asp-items="Html.GetEnumSelectList<States>()">
-                    </select>
+    <div class="col-md-5">
+        <form asp-action="@action" method="get">
+            <div class="form-actions no-color">
+                <p class="my-auto">
+                    Search: <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" />
+                    <input type="submit" value="Search" class="btn btn-outline-primary" />
+                    <a asp-action="@action" class="btn btn-secondary">Back to Full List</a>
                 </p>
-                <div class="col-md-6 my-auto">
-                    <input type="submit" value="Select" class="btn btn-primary" />
-                </div>
             </div>
         </form>
     </div>
-    <div class="col-md-4">
-        <form asp-action="@action" method="get" class="mb-3">
-            <div class="row">
-                <p class="col-md-6 my-auto">
-                    <select name="typeFilter" class="form-control" asp-items="Html.GetEnumSelectList<Expertise>()">
-                    </select>
-                </p>
-                <div class="col-md-6 my-auto">
-                    <input type="submit" value="Select" class="btn btn-primary" />
-                </div>
-            </div>
-        </form>
-    </div>*@
-    @*@if (!url.Contains("MyQueries"))
-    {*@
-        <div class="col-md-5">
-            <form asp-action="@action" method="get">
-                <div class="form-actions no-color">
-                    <p class="my-auto">
-                        Search: <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" />
-                        <input type="submit" value="Search" class="btn btn-outline-primary" />
-                        <a asp-action="@action" class="btn btn-secondary">Back to Full List</a>
-                    </p>
-                </div>
-            </form>
-        </div>
-    @*}*@
 </div>
 
 

@@ -41,6 +41,8 @@ namespace TekDesk.Controllers
 
             if (employeeId == null)
             {
+                TempData["EmployeeExists"] = false;
+                TempData["Message"] = "Login First!";
                 return RedirectToAction("Index", "Home");
             }
 

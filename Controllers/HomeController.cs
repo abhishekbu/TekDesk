@@ -49,6 +49,8 @@ namespace TekDesk.Controllers
 			}
 			catch
             {
+				TempData["EmployeeExists"] = false;
+				TempData["Message"] = "Login Failed! Employee doesn't Exist";
 				return RedirectToAction(nameof(Index));
 			}
 		}
