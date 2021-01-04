@@ -69,7 +69,7 @@ namespace TekDesk.Controllers
 
             solutions = sorting(sortOrder, solutions);
 
-            int pageSize = 1;
+            int pageSize = 3;
 
             if (queryID != null)
             {

@@ -113,7 +113,7 @@
 <nav>
     <ul class="pagination justify-content-end">
         <li class="page-item @prevDisabled">
-            <a asp-action="Index"
+            <a asp-action="@action"
                asp-route-sortOrder="@ViewData["CurrentSort"]"
                asp-route-pageNumber="@(Model.PageIndex - 1)"
                asp-route-currentFilter="@ViewData["CurrentFilter"]"
@@ -129,7 +129,7 @@
             }
             <li class="page-item">
                 <a class="page-link @activePage"
-                   asp-action="Index"
+                   asp-action="@action"
                    asp-route-sortOrder="@ViewData["CurrentSort"]"
                    asp-route-pageNumber="@i"
                    asp-route-currentFilter="@ViewData["CurrentFilter"]">
@@ -138,7 +138,7 @@
             </li>
         }
         <li class="page-item @nextDisabled">
-            <a asp-action="Index"
+            <a asp-action="@action"
                asp-route-sortOrder="@ViewData["CurrentSort"]"
                asp-route-pageNumber="@(Model.PageIndex + 1)"
                asp-route-currentFilter="@ViewData["CurrentFilter"]"
