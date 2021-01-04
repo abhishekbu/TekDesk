@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TekDesk.Models.Employee>
+﻿@model TekDesk.Models.TekDeskViewModels.EmployeeExpertiseData;
 
 @{
     ViewData["Title"] = "Index";
@@ -14,16 +14,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
+                Employee ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                Employee Name
             </th>
-            <th></th>
+            <th>
+                Expertise in
+            </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Employees)
         {
             <tr onclick="location.href = '@(Url.Action("Details", "Employees", new { id = item.ID } ))'">
                 <td>
@@ -31,6 +33,25 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    <table class="table styled-table">
+                        <thead>
+                            <tr>
+                                <td>Subject ID</td>
+                                <td>Subject Name</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var sub in Model.EmployeeSubjects.Where(e => e.EmployeeID == item.ID))
+                                {
+                                    <td>@sub.SubjectID</td>
+                                    <td>@sub.Subject.Name</td>  
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
                 </td>
             </tr>
         }
