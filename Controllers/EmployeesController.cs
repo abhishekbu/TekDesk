@@ -51,7 +51,7 @@ namespace TekDesk.Controllers
                     .ThenInclude(q => q.Employee)
                 .Where(en => en.EmployeeID == int.Parse(employeeId));
 
-            var notifications = await employeesNotifications.ToListAsync();
+            var notifications = await employeesNotifications.OrderByDescending(en => en.Query.Added).ToListAsync();
 
             return View(notifications);
         }

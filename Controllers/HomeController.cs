@@ -21,6 +21,8 @@ namespace TekDesk.Controllers
 		{
 			_logger = logger;
 			_tekDeskContext = tekDeskContext;
+
+			
 		}
 
 		public IActionResult Index()

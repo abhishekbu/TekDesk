@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -76,7 +77,8 @@ namespace TekDesk.Controllers
                     .Where(q => (q.Employee.FName
                             + q.Employee.LName
                             + q.Description
-                            + q.Added.Date.ToString())
+                            + q.Added.Date.ToString(CultureInfo.InvariantCulture)
+                      )
                             .Contains(searchTerm));
             }
 
